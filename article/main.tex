@@ -6,7 +6,7 @@
 %%                           JOHNS HOPKINS UNIVERSITY                         %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%   GitHub repository: https://github.com/bibekananda-datta/LaTeX-Template   %%
+%%   GitHub repository: https://github.com/bibekanandadatta/LaTeX-Templates  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[12pt,letterpaper]{article}   % document class (article w/ 12 pt)
@@ -20,7 +20,7 @@
 \def\BibFileName{template.bib}              % name of BibLaTeX file 
 
 
-%%%% GlOBAL MARGIN
+%%%% GLOBAL MARGIN
 \def\GlobalMargin{1.0in}                   
 
 
@@ -64,11 +64,11 @@
 
 
 %%%% TOC APPEARANCE
-\def\NoTOCLevel{3}                          % no of levels showed in TOC
+\def\NoTOCLevel{3}                          % no of levels shown in TOC
 \def\SecTOCSpacing{0.75\baselineskip}       % spacing between sections
 \def\SubsecTOCSpacing{0.5\baselineskip}     % ... between subsections
 \def\SubsubsecTOCSpacing{0.3\baselineskip}  % ... between subsubsections
-\def\TOCIndent{0 pt}                        % indentation in the list of figs and tables
+\def\TOCIndent{0 pt}                        % indentation in the list of figures and tables
 \def\AfterLOTTitleSpacing{0.1\baselineskip}
 
 %%%%%%%%%%%%%%%%%%%% END LIST OF VARIABLES FOR FORMATTING %%%%%%%%%%%%%%%%%%%%%%
@@ -77,9 +77,9 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% add packages as needed but sometimes the order of the packages matters.
+%% add packages as needed, but sometimes the order of the packages matters.
 %% you may get warnings/ errors for the order in which packages are included
-%% you may have to change the options in biblatex package for the bibliography
+%% you may have to change the options in the biblatex package for the bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LaTeX PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%% SOME PRE-REQUISITE PACKAGES
@@ -103,16 +103,16 @@
 
 %%%% BIBLIOGRAPHIC PACKAGE (change the style or other options if you need to)
 %% Nature style bibliography
-\usepackage[backend=biber, defernumbers=true, style=nature, 
-    maxnames=99, date=year, isbn=false, url=false, doi=true]{biblatex}
+% \usepackage[backend=biber, defernumbers=true, style=nature, 
+%     maxnames=99, date=year, isbn=false, url=false, doi=true]{biblatex}
 
 %% APA style
-% \usepackage[backend=biber, defernumbers=true, style=apa, 
-%   isbn=false, url=false, doi=true]{biblatex}
+\usepackage[backend=biber, defernumbers=true, style=apa, 
+  isbn=false, url=true, doi=true]{biblatex}
 
 %% IEEE style
 % \usepackage[backend=biber,style=ieee,defernumbers=true,
-%     maxnames=99, date=year, isbn=false, url=false, doi=true]{biblatex}
+%     maxnames=99, date=year, isbn=false, url=true, doi=true]{biblatex}
 
 
 
@@ -132,7 +132,7 @@
 \usepackage{authblk}                        % to manage authors and affiliations
 \usepackage[pagewise,mathlines]{lineno}     % line numbers for drafting
 \usepackage[ruled]{algorithm2e}             % to manage algorithm environment
-\usepackage[titletoc]{appendix}             % to manage appendix chapters
+\usepackage[title,titletoc]{appendix}       % to manage appendix environment
 \usepackage{blindtext}                      % to generate random filler texts
 \usepackage{calc}                           % to set arithmetic arguments for spacing
 \usepackage{caption}                        % to manage captions
@@ -147,6 +147,7 @@
 \usepackage[dvipsnames]{xcolor}             % to manage colors
 \usepackage{hyperref}                       % for hyperlinks
 \usepackage[all]{hypcap}                    % for captions on the side of figures
+\usepackage{forest}
 \usepackage{ifthen}                         % if-then statement in algorithm
 \usepackage{lscape}                         % landscape mode
 \usepackage{listings,minted}                % to include codes
@@ -198,7 +199,7 @@
 \DeclareFieldFormat{titlecase}{\MakeSentenceCase*{#1}}
 \AtBeginBibliography{\urlstyle{rm}}     % roman font family for URL (DOI)
 
-%% separate category for papers to be not cited in the bibliography
+%% separate category for papers not to be cited in the bibliography
 \DeclareBibliographyCategory{mypapers}             
 \newcommand{\mybibexclude}[1]{\addtocategory{mypapers}{#1}}
 
@@ -295,24 +296,65 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OTHER MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%%%% settings for algorithm2e package
+\renewcommand{\algorithmcfname}{Procedure}
+\SetKwFor{While}{while}{}{end while}%
+\SetArgSty{textnormal}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{RoyalBlue}{#1}}
+\SetCommentSty{mycommfont}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% add all your custom math settings and macros in the following section.
-%% this is where LaTeX supremacy becomes a thing. you can customize a lot.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MATH MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%% Define math symbols and macros
-\newcommand{\dC}{$^{\circ}$C}           % degree celsius symbol
-\newcommand{\vect}[1]{\mathbf{#1}}      % boldface for vectors and tensors
-\DeclareMathOperator{\T}{{\top}}        % transpose of a matrix/ tensor
-\DeclareMathOperator{\tr}{tr}           % trace of a matrix
-\DeclareMathOperator{\divg}{div}        % divergence of vector and tensor
-\DeclareMathOperator{\grad}{grad}       % gradient of vector and tensor
-\DeclareMathOperator{\curl}{curl}       % curl of vector and tensor
 
 \theoremstyle{definition}
 \newtheorem{remark}{Remark}
 \counterwithin{remark}{section}
+
+% define math symbols
+\newcommand{\dC}{$^{\circ}$C}
+\DeclareMathOperator{\R}{\mathrm{R}}
+\DeclareMathOperator{\T}{{\top}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\newcommand{\mat}[1]{\mathbf{#1}}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\skw}{skw}
+
+\DeclareMathOperator{\divg}{div}
+\DeclareMathOperator{\Divg}{Div}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\Grad}{Grad}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Curl}{Curl}
+
+\DeclareMathOperator{\sgn}{sign}
+
+
+\DeclareMathOperator*{\Aop}{A}
+\makeatletter
+\DeclareRobustCommand\bigop[2][1]{%
+  \mathop{\vphantom{\sum}\mathpalette\bigop@{{#1}{#2}}}\slimits@
+}
+\newcommand{\bigop@}[2]{\bigop@@#1#2}
+\newcommand{\bigop@@}[3]{%
+  \vcenter{%
+    \sbox\z@{$#1\sum$}%
+    \hbox{\resizebox{\ifx#1\displaystyle#2\fi\dimexpr\ht\z@+\dp\z@}{!}{$\m@th#3$}}%
+  }%
+}
+\makeatother
+\newcommand{\bigA}{\DOTSB\bigop[1]{\mathsf{A}}}
+
+
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
 %% these are just some examples; add more macros defined by you
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% END MATH MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -343,7 +385,7 @@
 %%% write your main text here
 \blinddocument
 
-The above texts were generated using \texttt{blindtext} package \cite{dirac}.
+The above texts were generated using the \texttt{blindtext} package \cite{dirac}.
 
 
 %% references
